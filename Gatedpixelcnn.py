@@ -107,7 +107,7 @@ def show_center_recep_field(img, out):
     plt.close()
 
 # we don't use conv, so the receptive field is only the center pixel
-show_center_recep_field(inp_img, inp_img)
+#show_center_recep_field(inp_img, inp_img)
 # we first visualize the original masked_conv
 kernel_size = 3
 mask_A = torch.zeros((3, 3))
@@ -118,7 +118,7 @@ masked_conv = MaskedConv2d(mask_A, 1, 1, 3, padding=1)
 masked_conv.weight.data.fill_(1)
 masked_conv.bias.data.fill_(0)
 masked_conv_img = masked_conv(inp_img)
-show_center_recep_field(inp_img, masked_conv_img)
+#show_center_recep_field(inp_img, masked_conv_img)
 # use mask_type B
 mask_B = mask_A.clone()
 mask_B[kernel_size//2, kernel_size//2] = 1.
@@ -129,7 +129,7 @@ masked_conv.bias.data.fill_(0)
 for l_idx in range(4):
     masked_conv_img = masked_conv(masked_conv_img)
     print(f"Layer {l_idx+2}")
-    show_center_recep_field(inp_img, masked_conv_img)
+    #show_center_recep_field(inp_img, masked_conv_img)
     
 # there is a “blind spot” on the right upper side
 # visualize HorizontalStackConv
@@ -137,16 +137,16 @@ horiz_conv = HorizontalStackConv("A", 1, 1, 3, padding=1)
 horiz_conv.weight.data.fill_(1)
 horiz_conv.bias.data.fill_(0)
 horiz_img = horiz_conv(inp_img)
-show_center_recep_field(inp_img, horiz_img)
+#show_center_recep_field(inp_img, horiz_img)
 # visualize VerticalStackConv
 vert_conv = VerticalStackConv("A", 1, 1, 3, padding=1)
 vert_conv.weight.data.fill_(1)
 vert_conv.bias.data.fill_(0)
 vert_img = vert_conv(inp_img)
-show_center_recep_field(inp_img, vert_img)
+#show_center_recep_field(inp_img, vert_img)
 # combine the two by adding, which is what we expect
 horiz_img = vert_img + horiz_img
-show_center_recep_field(inp_img, horiz_img)
+#show_center_recep_field(inp_img, horiz_img)
 # Initialize convolutions with equal weight to all input pixels
 horiz_conv = HorizontalStackConv("B", 1, 1, 3, padding=1)
 horiz_conv.weight.data.fill_(1)
@@ -164,7 +164,7 @@ for l_idx in range(4):
     vert_img = vert_conv(vert_img)
     horiz_img = horiz_conv(horiz_img) + vert_img
     print(f"Layer {l_idx+2}")
-    show_center_recep_field(inp_img, horiz_img)
+    #show_center_recep_field(inp_img, horiz_img)
 class GatedMaskedConv(nn.Module):
 
     def __init__(self, in_channels, kernel_size=3, dilation=1):
@@ -237,7 +237,7 @@ test_model = GatedPixelCNN(1, 64, 1)
 inp = torch.zeros(1, 1, 16, 16)
 inp.requires_grad_()
 out = test_model(inp)
-show_center_recep_field(inp, out.squeeze(dim=2))
+#show_center_recep_field(inp, out.squeeze(dim=2))
 del inp, out, test_model
 import ipaddress
 import re
@@ -353,7 +353,7 @@ for cl in range(6):
     model = GatedPixelCNN(in_channels, channels, out_channels).cuda()
     optimizer = torch.optim.Adam(model.parameters(), lr=5e-4)
     print_freq = 1000
-    epochs=40
+    epochs=80
     for epoch in range(epochs):
         print("Start training epoch {}".format(epoch,))
         for i, (images, labels) in enumerate(train_loader):

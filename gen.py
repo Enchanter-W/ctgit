@@ -274,12 +274,12 @@ parse=argparse.ArgumentParser()
 parse.add_argument('--num', type=str)
 parse.add_argument('--budget', type=str)
 args=parse.parse_args()
-model0 = torch.load('./model/0.pth')
-model1 = torch.load('./model/1.pth')
-model2 = torch.load('./model/2.pth')
-model3 = torch.load('./model/3.pth')
-model4 = torch.load('./model/4.pth')
-model5 = torch.load('./model/5.pth')
+model0 = torch.load('./model/0.pth' , weights_only=False)
+model1 = torch.load('./model/1.pth' , weights_only=False)
+model2 = torch.load('./model/2.pth' , weights_only=False)
+model3 = torch.load('./model/3.pth' , weights_only=False)
+model4 = torch.load('./model/4.pth' , weights_only=False)
+model5 = torch.load('./model/5.pth' , weights_only=False)
 all_model=[model0,model1,model2,model3,model4,model5]
 import re
 res=[]
